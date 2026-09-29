@@ -1,17 +1,22 @@
-import java.util.ArrayList;
-
 public class Curso {
+    private final String id;
     private String nome;
     private int creditos;
-    private ArrayList<Disciplina> disciplinas = new ArrayList<>();
+    public Curso(String id, String nome, int creditos) {
+        this.id = id;
+        atualizar(nome, creditos);
+    }
 
-    public Curso(String nome, int creditos) {
+    void atualizar(String nome, int creditos) {
+        if (creditos <= 0) {
+            throw new IllegalArgumentException("Créditos devem ser positivos.");
+        }
         this.nome = nome;
         this.creditos = creditos;
     }
 
-    public void adicionarDisciplina(Disciplina disciplina) {
-        disciplinas.add(disciplina);
+    public String getId() {
+        return id;
     }
 
     public String getNome() {
@@ -22,7 +27,7 @@ public class Curso {
         return creditos;
     }
 
-    public ArrayList<Disciplina> getDisciplinas() {
-        return disciplinas;
+    public String toString() {
+        return id + " - " + nome + " (" + creditos + " créditos)";
     }
 }

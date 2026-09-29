@@ -1,35 +1,24 @@
-import java.util.ArrayList;
-
 public class Disciplina {
+    private final String id;
     private String nome;
     private int creditos;
-    private ArrayList<Aluno> alunos = new ArrayList<>();
-    private boolean ativa;
+    private final Curso curso;
+    public Disciplina(String id, String nome, int creditos, Curso curso) {
+        this.id = id;
+        this.curso = curso;
+        atualizar(nome, creditos);
+    }
 
-    public Disciplina(String nome, int creditos) {
+    void atualizar(String nome, int creditos) {
+        if (creditos <= 0) {
+            throw new IllegalArgumentException("Créditos devem ser positivos.");
+        }
         this.nome = nome;
         this.creditos = creditos;
     }
 
-    public boolean adicionarAluno(Aluno aluno) {
-        if (alunos.size() >= 60) {
-            return false;
-        }
-
-        if (alunos.contains(aluno)) {
-            return false;
-        }
-
-        alunos.add(aluno);
-        return true;
-    }
-
-    public void removerAluno(Aluno aluno) {
-        alunos.remove(aluno);
-    }
-
-    public void verificarAtivacao() {
-        ativa = alunos.size() >= 3;
+    public String getId() {
+        return id;
     }
 
     public String getNome() {
@@ -40,11 +29,11 @@ public class Disciplina {
         return creditos;
     }
 
-    public ArrayList<Aluno> getAlunos() {
-        return alunos;
+    public Curso getCurso() {
+        return curso;
     }
 
-    public boolean isAtiva() {
-        return ativa;
+    public String toString() {
+        return id + " - " + nome + " (" + creditos + " créditos; curso " + curso.getNome() + ")";
     }
 }
