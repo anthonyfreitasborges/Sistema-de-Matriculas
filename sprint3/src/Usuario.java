@@ -14,4 +14,7 @@ public abstract class Usuario {
     public boolean validarSenha(String senhaInformada) {
         return senha.equals(senhaInformada);
     }
+    public String getSenha() {
+    return senha;
+}
 }

@@ -12,7 +12,9 @@ public class App {
     private static final Secretaria secretaria = new Secretaria("secretaria", "secretaria123");
 
     public static void main(String[] args) {
+        PersistenciaDados.carregar(cursos, alunos, professores, sistema);
         boolean executando = true;
+        
         while (executando) {
             System.out.println("\n=== Sistema de Matriculas ===");
             System.out.println("Acesso inicial da secretaria: login secretaria | senha secretaria123");
@@ -182,6 +184,7 @@ public class App {
             Disciplina disciplina = new Disciplina(nomeDisciplina,
                     lerPositivo("Creditos da disciplina: "));
             curso.adicionarDisciplina(disciplina);
+            PersistenciaDados.salvar(cursos, alunos, professores);
             sistema.adicionarDisciplina(disciplina);
         }
         cursos.add(curso);
@@ -254,6 +257,7 @@ public class App {
             return;
         }
         alunos.add(new Aluno(matricula, login, lerSenha(), nome, cursos.get(indiceCurso)));
+       PersistenciaDados.salvar(cursos, alunos, professores); 
         System.out.println("Aluno cadastrado com sucesso.");
     }
 
@@ -292,7 +296,8 @@ public class App {
             return;
         }
             professores.add(new Professor(login, lerSenha(), nome));
-        System.out.println("Professor cadastrado com sucesso.");
+      PersistenciaDados.salvar(cursos, alunos, professores);
+            System.out.println("Professor cadastrado com sucesso.");
     }
 
     private static void associarProfessor() {
@@ -377,6 +382,8 @@ public class App {
             return;
         }
         if (sistema.matricular(aluno, disciplinas.get(escolha - 1), tipo)) {
+           PersistenciaDados.salvar(cursos, alunos, professores);
+
             System.out.println("Inscricao realizada.");
         } else {
             System.out.println("Inscricao nao realizada: verifique limites, duplicidade e periodo.");
@@ -401,6 +408,7 @@ public class App {
             return;
         }
         if (sistema.cancelarMatricular(aluno, matriculas.get(escolha - 1).getDisciplina())) {
+           PersistenciaDados.salvar(cursos, alunos, professores);
             System.out.println("Matricula cancelada.");
         } else {
             System.out.println("Nao foi possivel cancelar a matricula.");
@@ -420,6 +428,7 @@ public class App {
 
     private static void encerrarPeriodo() {
         if (!sistema.fimPeriodo()) {
+           PersistenciaDados.salvar(cursos, alunos, professores);
             System.out.println("Nao ha periodo de matriculas aberto.");
             return;
         }
